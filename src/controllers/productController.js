@@ -14,9 +14,9 @@ const ProductController = {
 
     async getAll(req, res) {
         try {
-            console.log(Template.principal)
             const Products = await Product.find();
-            res.send(Products);
+            console.log( await Template.principal(Products))
+            res.send( await Template.principal(Products));
         } catch (error) {
             res.status(500).send(error);
         }

@@ -3,9 +3,12 @@ const app = express();
 const {dbConnection} = require("./config/config");
 const PORT = 3000;
 const ProductsRoutes = require("./routes/productRoutes");
+const path = require('path');
 // const usersRoutes = require("./routes/users")
 //const swaggerUI = require("swagger-ui-express");
 //const docs = require("./docs/index");
+
+app.use(express.static(__dirname + '/../public'));
 
 
 dbConnection();
