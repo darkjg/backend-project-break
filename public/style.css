@@ -147,10 +147,16 @@ table {
     padding: 1%;
     background-color: black;
 }
-.productos{
+
+.productos {
     display: flex;
     align-content: center;
     align-items: center;
-    flex-flow: column;
-  
+    flex-wrap: wrap;
+    gap: 2%;
+    margin-right: 3%;
+    margin-left: 3%;
+}
+li{
+    padding: 1%;
 }
