@@ -24,9 +24,11 @@ const ProductController = {
     //showProductById: Devuelve la vista con el detalle de un producto.
     async showProductById(req, res) {
         try {
-            ////console.log(req.body.admin)
-            const Product = await Product.findById(req.params._id);
-            res.send(Product);
+            console.log(req.body.admin)
+            
+            const mostrarProduct = await Product.findById(req.params.productId);
+            console.log(mostrarProduct)
+            res.send(mostrarProduct);
         } catch (error) {
             res.status(500).send(error);
         }
@@ -53,11 +55,9 @@ const ProductController = {
     //showEditProduct: Devuelve la vista con el formulario para editar un producto.
     async showEditProduct(req, res) {
         try {
-            //console.log(req.body.admin)
-            const ProductUpdated = await Product.findByIdAndUpdate(req.params._id, {
-                completed: true,
-            }, { new: true });
-            res.send(ProductUpdated);
+            //console.log(req.params.productId)
+            const ProductUpdated = await Product.findById(req.params.productId);   
+            res.send(await Template.formUpdateProduct(ProductUpdated));
         } catch (error) {
             res.status(500).send(error);
         }
@@ -65,11 +65,17 @@ const ProductController = {
     //updateProduct: Actualiza un producto. Una vez actualizado, redirige a la vista de detalle del producto o a la vista de todos los productos del dashboard.
     async updateProduct(req, res) {
         try {
-            //console.log(req.body.admin)
-            const ProductUpdated = await Product.findByIdAndUpdate(req.params._id, {
-                title: req.body.title,
+          
+            const ProductUpdated = await Product.findByIdAndUpdate(req.body.idProduct, {
+                nombre: req.body.nombre,   
+                imagen: req.body.imagen,  
+                descripcion:req.body.descripcion,  
+                categoria: req.body.categoria,  
+                talla: req.body.talla,  
+                precio: req.body.precio
             }, { new: true });
-            res.send(ProductUpdated);
+           
+            res.send(await Template.updateProduct(ProductUpdated));
         } catch (error) {
             res.status(500).send(error);
         }
@@ -78,8 +84,8 @@ const ProductController = {
     async deleteProduct(req, res) {
         try {
             //console.log(req.body.admin)
-            const ProductDeleted = await Product.findByIdAndDelete(req.params._id)
-            res.send({ msg: "Producto eliminada éxito", ProductDeleted })
+            const ProductDeleted = await Product.findByIdAndDelete(req.params.productId)
+            res.redirect("/dashboard");
         } catch (error) {
             res.status(500).send(error);
         }

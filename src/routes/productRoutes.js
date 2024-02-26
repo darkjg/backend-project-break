@@ -25,5 +25,5 @@ router.post("/dashboard/", ProductController.createProduct)
 router.get("/dashboard/:productId", ProductController.showProductById);
 router.get("/dashboard/:productId/edit", ProductController.showEditProduct);
 router.post("/dashboard/:productId", ProductController.updateProduct);
-router.get("/dashboard/:productId/edit", ProductController.deleteProduct);
+router.post("/dashboard/:productId/edit", ProductController.deleteProduct);
 module.exports = router;
