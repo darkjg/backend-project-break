@@ -13,6 +13,7 @@
 
 const express = require("express");
 const ProductController = require("../controllers/productController");
+const FirebaseController = require("../controllers/firebaseController");
 const router = express.Router();
 
 //Global
@@ -26,4 +27,7 @@ router.get("/dashboard/:productId", ProductController.showProductById);
 router.get("/dashboard/:productId/edit", ProductController.showEditProduct);
 router.post("/dashboard/:productId", ProductController.updateProduct);
 router.post("/dashboard/:productId/edit", ProductController.deleteProduct);
+
+router.get("/register", FirebaseController.formRegistro);
+router.post("/register", FirebaseController.registro);
 module.exports = router;

@@ -1,5 +1,5 @@
 const Product = require("../models/Products");
-
+let flag=false;
 const head = `<!DOCTYPE html>
 <html lang="en">
 
@@ -11,7 +11,7 @@ const head = `<!DOCTYPE html>
 </head>
 `;
 
-const header = `
+let header = `
 <header id="cabecera">
 <div class="texto">
     <div>Productos</div>
@@ -19,12 +19,30 @@ const header = `
     <div>Pantalones</div>
     <div>Zapatos</div>
     <div>Accesorios</div>
-    <div>Login</div>
-</div>
-</header>
 `
+if (!flag) {
+    header += `    
+    <button value="${flag=!flag}">Login</button> 
+    </div>
+    </header>`
+} else {
+    header += `  
+    <button value="${flag=!flag}">Logout</button> 
+    </div>
+    </header>`
+}
+
+
+
+
 let body = ``;
 let devolver = "";
+
+console.log(flag)
+
+
+
+
 
 const TemplatesProduct = {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -144,7 +162,7 @@ const TemplatesProduct = {
         const { nombre, imagen, descripcion, categoria, talla, precio } = prodcutoUpadte;
 
         //console.log(nombre, imagen, descripcion, categoria, talla, precio)
-        devolver = `${head}${header}`        
+        devolver = `${head}${header}`
         body = ` <form action="/dashboard/${prodcutoUpadte.id}" method="post" id="updateForm">`
         body += `
             <input type="text" id="idProduct" name="idProduct" value="${prodcutoUpadte.id}" readonly onmousedown="return false;" style=" display:none "><br>
@@ -188,9 +206,9 @@ const TemplatesProduct = {
         devolver += body;
         return devolver;
     },
-    
+
     async updateProduct(ProductUpdated) {
-        const {nombre, imagen, descripcion, categoria, talla, precio}=ProductUpdated;
+        const { nombre, imagen, descripcion, categoria, talla, precio } = ProductUpdated;
         devolver = `${head}${header}`
         body = ` <h1>Se ha actualizado el producto</h1><div class=producto>`
         body += `       
