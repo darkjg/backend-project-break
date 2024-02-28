@@ -1,3 +1,4 @@
+const session = require("express-session");
 const admin = require("firebase-admin");
 let flag = false;
 const head = `<!DOCTYPE html>
@@ -10,7 +11,12 @@ const head = `<!DOCTYPE html>
     <link rel="stylesheet" href="/style.css">
 </head>
 `;
-
+if(session.kind!=undefined && session.kind!=null ){
+    flag = true;
+}else{
+    flag = false;
+}
+console.log(session.kind)
 let header = `
 <header id="cabecera">
 <div class="texto">
@@ -20,24 +26,18 @@ let header = `
     <div>Zapatos</div>
     <div>Accesorios</div>
 `
-if (!flag) {
-    header += `    
-    <button value="${flag = !flag}">Login</button> 
-    </div>
-    </header>`
-} else {
-    header += `  
-    <button value="${flag = !flag}">Logout</button> 
-    </div>
-    </header>`
-}
+
 let body = ``;
 let devolver = "";
+
 
 const Templatefirebase = {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////registro
     //Formulario de registro
+
+    
+
     async formRegistro() {
         devolver = `${head}${header}`
         body = ` <form action="/Register/" method="post" id="loginForm">`
@@ -76,6 +76,23 @@ const Templatefirebase = {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////login
     //Formulario de login
+    async formLogin() {
+        devolver = `${head}${header}`
+        body = ` <form action="/login/" method="post" id="LogearseForm">`
+        body += `           
+            <label for="email">Email:</label>
+            <input type="text" id="email" name="email"  required><br>
+    
+            <label for="password">Contraseña:</label>
+            <input type="password" id="password" name="password"  required><br>
+        
+           
+            <button type="submit">Logearse</button>
+            `
+        body += " </form>"
+        devolver += body;
+        return devolver;
+    },
     async login(req) {
         const { email, password } = req.body;
         admin.auth().getUserByEmail(email).then((userRecord) => {

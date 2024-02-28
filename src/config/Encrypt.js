@@ -19,7 +19,7 @@ function encrypt(text) {
 
 
 Encriptada = encrypt(ENCRYPTION_KEY);
-console.log(Encriptada)
+
 
 let hash = bcrypt.hashSync(Encriptada, 16);
 

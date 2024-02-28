@@ -30,4 +30,7 @@ router.post("/dashboard/:productId/edit", ProductController.deleteProduct);
 
 router.get("/register", FirebaseController.formRegistro);
 router.post("/register", FirebaseController.registro);
+router.get("/login", FirebaseController.formLogin);
+router.post("/login", FirebaseController.login);
+router.post("/logout", FirebaseController.logount);
 module.exports = router;

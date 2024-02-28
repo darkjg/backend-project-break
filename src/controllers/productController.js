@@ -24,10 +24,10 @@ const ProductController = {
     //showProductById: Devuelve la vista con el detalle de un producto.
     async showProductById(req, res) {
         try {
-            console.log(req.body.admin)
+            
             
             const mostrarProduct = await Product.findById(req.params.productId);
-            console.log(mostrarProduct)
+          
             res.send(mostrarProduct);
         } catch (error) {
             res.status(500).send(error);

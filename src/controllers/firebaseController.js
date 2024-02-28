@@ -1,8 +1,10 @@
 const Template = require("../Templates/firebaseTemplate");
 const Cuenta = require("../models/Cuenta");
 const firebase = require("../config/firebase")
-const {getAuth,createUserWithEmailAndPassword} = require("firebase/auth")
+const { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } = require("firebase/auth");
+const session = require("express-session");
 const auth = getAuth(firebase);
+
 const FirebaseController = {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////
     //registro
@@ -19,25 +21,53 @@ const FirebaseController = {
     async registro(req, res) {
         const { email, password } = req.body;
         //    await Cuenta.create(req.body);
-        try {
-            const signUp = createUserWithEmailAndPassword(auth, email, password);
 
-        } catch (error) {
-            res.send("Email ya registrado")
-            console.log(error)
-        }
+        createUserWithEmailAndPassword(auth, email, password).then((userCredential) => {
+            let user = userCredential.user;
+
+        })
+            .catch((error) => {
+                if (error.code == "auth/email-already-in-use") {
+                    res.send("Email en uso");
+                } else if (error.code == "auth/invalid-email") {
+                    res.send("Email no valido");
+                } else if (error.code == "auth/operation-not-allowed") {
+                    res.send("Operacion no permitida");
+                } else if (error.code == "auth/weak-password") {
+                    res.send("Contraseña muy debil");
+                }
+            });
+
 
 
     },
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////
     //login
+
+    async formLogin(req, res) {
+        try {
+            res.send(await Template.formLogin());
+        } catch (e) {
+            console.log(e)
+
+        }
+
+    },
+
+
+
+
+
+
+
     async login(req, res) {
         const { email, password } = req.body;
         try {
-            const logIn = signInWithEmailAndPassword(auth, email, password);
-            console.log(logIn)
-            º 
+           
+            const logIn = await signInWithEmailAndPassword(auth, email, password);         
+            req.session.kind = logIn._tokenResponse.kind
+            res.redirect("/dashboard");
         } catch (error) {
 
         }
@@ -45,9 +75,9 @@ const FirebaseController = {
     },
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////
     //logout
-    async login(req, res) {
-        req.session.user = null;
-        flag = false;
+    async logount(req, res) {
+        req.session.kind = null;
+        res.redirect("/products");
         return ("Logged out");
     }
 
