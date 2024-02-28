@@ -1,14 +1,8 @@
 const Template = require("../Templates/firebaseTemplate");
 const Cuenta = require("../models/Cuenta");
-const firebase = require("../config/firebase");
-const { getAuth, createUserWithEmailAndPassword,signInWithEmailAndPassword } = require("firebase/auth");
-auth = getAuth(firebase);
-
-
-
-
-
-
+const firebase = require("../config/firebase")
+const {getAuth,createUserWithEmailAndPassword} = require("firebase/auth")
+const auth = getAuth(firebase);
 const FirebaseController = {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////
     //registro
@@ -27,6 +21,7 @@ const FirebaseController = {
         //    await Cuenta.create(req.body);
         try {
             const signUp = createUserWithEmailAndPassword(auth, email, password);
+
         } catch (error) {
             res.send("Email ya registrado")
             console.log(error)
@@ -40,15 +35,17 @@ const FirebaseController = {
     async login(req, res) {
         const { email, password } = req.body;
         try {
-            const logIn=signInWithEmailAndPassword(auth, email, password);
+            const logIn = signInWithEmailAndPassword(auth, email, password);
+            console.log(logIn)
+            º 
         } catch (error) {
-            
+
         }
-        
+
     },
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////
     //logout
-    async logout(req, res) {
+    async login(req, res) {
         req.session.user = null;
         flag = false;
         return ("Logged out");
