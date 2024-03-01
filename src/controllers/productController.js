@@ -16,7 +16,7 @@ const ProductController = {
     async showProducts(req, res) {
         try {
             const Products = await Product.find();
-            res.send(await Template.principal(Products));
+            res.send(await Template.principal(Products,req));
         } catch (error) {
             res.status(500).send(error);
         }
@@ -36,7 +36,7 @@ const ProductController = {
     //showNewProduct: Devuelve la vista con el formulario para subir un artículo nuevo.
     async showNewProduct(req, res) {
         try {
-            res.status(200).send(await Template.formCreateProduct());
+            res.status(200).send(await Template.formCreateProduct(req));
         } catch (error) {
             res.status(500).send(error);
         }
@@ -46,7 +46,7 @@ const ProductController = {
         try {
             const { nombre, imagen, descripcion, categoria, talla, precio } = req.body;           
             const productCreated = await Product.create(req.body);
-            let web = await Template.createProduct(nombre, imagen, descripcion, categoria, talla, precio)          
+            let web = await Template.createProduct(nombre, imagen, descripcion, categoria, talla, precio,req)          
             res.status(201).send(web);
         } catch (error) {
             res.status(500).send(error);
@@ -57,7 +57,7 @@ const ProductController = {
         try {
             //console.log(req.params.productId)
             const ProductUpdated = await Product.findById(req.params.productId);   
-            res.send(await Template.formUpdateProduct(ProductUpdated));
+            res.send(await Template.formUpdateProduct(ProductUpdated,req));
         } catch (error) {
             res.status(500).send(error);
         }
@@ -75,7 +75,7 @@ const ProductController = {
                 precio: req.body.precio
             }, { new: true });
            
-            res.send(await Template.updateProduct(ProductUpdated));
+            res.send(await Template.updateProduct(ProductUpdated,req));
         } catch (error) {
             res.status(500).send(error);
         }

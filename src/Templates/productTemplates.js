@@ -1,5 +1,4 @@
 const Product = require("../models/Products");
-let flag=false;
 const head = `<!DOCTYPE html>
 <html lang="en">
 
@@ -10,35 +9,73 @@ const head = `<!DOCTYPE html>
     <link rel="stylesheet" href="/style.css">
 </head>
 `;
+async function hea(kind) {
 
-let header = `
-<header id="cabecera">
-<div class="texto">
-    <div>Productos</div>
-    <div>Camisetas</div>
-    <div>Pantalones</div>
-    <div>Zapatos</div>
-    <div>Accesorios</div>
+    let devol = `
+        <header id="cabecera">
+        
+        <nav class="menu">
+        <ul>
+            <li>
+                <form action="/products" method="get">
+                    <button type="submit" >Productos</button>
+                </form>
+            </li>
+            <li>
+                <form action="/products" method="get">
+                    <button type="submit" >Camisetas</button>
+                </form>
+            </li>
+            <li>
+                <form action="/products" method="get">
+                    <button type="submit" >Pantalones</button>
+                </form>
+            </li>
+            <li>
+                <form action="/products" method="get">
+                    <button type="submit" >Zapatos</button>
+                </form>     
+            </li>
+            <li>
+                <form action="/products" method="get">
+                    <button type="submit" >Accesorios</button>
+                </form>
+            </li>
 `
-if (!flag) {
-    header += `    
-    <button value="${flag=!flag}">Login</button> 
-    </div>
-    </header>`
-} else {
-    header += `  
-    <button value="${flag=!flag}">Logout</button> 
-    </div>
-    </header>`
-}
+    if (kind == undefined) {
 
+
+        devol += `    
+            <li>
+                <form action="/login" method="get">
+                    <button type="submit" >login</button>
+                </form>
+            </li>
+            </ul>
+            </nav>
+            </header>`
+    } else {
+
+        devol += `    
+            <li>
+                <form action="/logout" method="post">
+                    <button type="submit" >logout</button>
+                </form>
+            </li>
+            </ul>
+            </nav>
+            </header>`
+    }
+
+    return devol;
+}
 
 
 
 let body = ``;
 let devolver = "";
 
-console.log(flag)
+
 
 
 
@@ -47,7 +84,16 @@ console.log(flag)
 const TemplatesProduct = {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////
     //Obtencion de todos los productos y paguina principal
-    async principal(Products) {
+
+
+
+
+
+    async principal(Products,req) {
+
+
+        header = await hea(req.session.kind)
+        console.log(header)
         devolver = `${head}${header}`
         body = "<ul class=productos>"
         // console.log(Products.length)
@@ -68,14 +114,16 @@ const TemplatesProduct = {
         }
         body += " </ul>"
         devolver += body;
+        
         return devolver;
     },
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////
     //Obtencion de un producto en concreto
     async findByid(product) {
+        header = await hea(req.session.kind)
         devolver = `${head}${header}`
         body = "<div class=producto>"
-        console.log(Products.length)
+        
         if (Products.length != 0) {
             body += `<div id=${Product.id}>
                 <div>${Product.nombre}</div>
@@ -94,8 +142,9 @@ const TemplatesProduct = {
     },
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////
     //Form para crear un prodcuto
-    async formCreateProduct() {
+    async formCreateProduct(req) {
 
+        header = await hea(req.session.kind)
         devolver = `${head}${header}`
         body = ` <form action="/dashboard/" method="post" id="createForm">`
         body += `
@@ -139,7 +188,8 @@ const TemplatesProduct = {
     },
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////
     //Creacion de un producto
-    async createProduct(nombre, imagen, descripcion, categoria, talla, precio) {
+    async createProduct(nombre, imagen, descripcion, categoria, talla, precio,req) {
+        header = await hea(req.session.kind)
         devolver = `${head}${header}`
         body = ` <h1>Se ha creado el producto</h1><div class=producto>`
         body += `       
@@ -158,10 +208,11 @@ const TemplatesProduct = {
         return devolver;
     },
     //nombre, imagen, descripcion, categoria, talla, precio
-    async formUpdateProduct(prodcutoUpadte) {
+    async formUpdateProduct(prodcutoUpadte,req) {
         const { nombre, imagen, descripcion, categoria, talla, precio } = prodcutoUpadte;
 
         //console.log(nombre, imagen, descripcion, categoria, talla, precio)
+        header = await hea(req.session.kind)
         devolver = `${head}${header}`
         body = ` <form action="/dashboard/${prodcutoUpadte.id}" method="post" id="updateForm">`
         body += `
@@ -207,8 +258,9 @@ const TemplatesProduct = {
         return devolver;
     },
 
-    async updateProduct(ProductUpdated) {
+    async updateProduct(ProductUpdated,req) {
         const { nombre, imagen, descripcion, categoria, talla, precio } = ProductUpdated;
+        header = await hea(req.session.kind)
         devolver = `${head}${header}`
         body = ` <h1>Se ha actualizado el producto</h1><div class=producto>`
         body += `       

@@ -14,23 +14,24 @@
 const express = require("express");
 const ProductController = require("../controllers/productController");
 const FirebaseController = require("../controllers/firebaseController");
+const checkAuth=require("../middlewares/firebaseMidelware")
 const router = express.Router();
 
 //Global
-router.get("/products", ProductController.showProducts);
-router.get("/products/:productId", ProductController.showProductById);
+router.get("/products" ,ProductController.showProducts);
+router.get("/products/:productId",ProductController.showProductById);
 //Dashboard
-router.get("/dashboard", ProductController.showProducts);
-router.get("/dashboard/new", ProductController.showNewProduct);
-router.post("/dashboard/", ProductController.createProduct)
-router.get("/dashboard/:productId", ProductController.showProductById);
-router.get("/dashboard/:productId/edit", ProductController.showEditProduct);
-router.post("/dashboard/:productId", ProductController.updateProduct);
-router.post("/dashboard/:productId/edit", ProductController.deleteProduct);
+router.get("/dashboard",checkAuth, ProductController.showProducts);
+router.get("/dashboard/new",checkAuth, ProductController.showNewProduct);
+router.post("/dashboard/",checkAuth, ProductController.createProduct)
+router.get("/dashboard/:productId",checkAuth, ProductController.showProductById);
+router.get("/dashboard/:productId/edit",checkAuth, ProductController.showEditProduct);
+router.post("/dashboard/:productId",checkAuth, ProductController.updateProduct);
+router.post("/dashboard/:productId/edit",checkAuth, ProductController.deleteProduct);
 
 router.get("/register", FirebaseController.formRegistro);
 router.post("/register", FirebaseController.registro);
 router.get("/login", FirebaseController.formLogin);
 router.post("/login", FirebaseController.login);
-router.post("/logout", FirebaseController.logount);
+router.post("/logout",FirebaseController.logount);
 module.exports = router;

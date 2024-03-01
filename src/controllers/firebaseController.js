@@ -10,7 +10,7 @@ const FirebaseController = {
     //registro
     async formRegistro(req, res) {
         try {
-            res.send(await Template.formRegistro());
+            res.send(await Template.formRegistro(req));
         } catch (e) {
             console.log(e)
 
@@ -47,7 +47,7 @@ const FirebaseController = {
 
     async formLogin(req, res) {
         try {
-            res.send(await Template.formLogin());
+            res.send(await Template.formLogin(req));
         } catch (e) {
             console.log(e)
 

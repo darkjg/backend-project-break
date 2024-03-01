@@ -147,8 +147,7 @@ table {
     padding: 1%;
     background-color: black;
 }
-
-.productos {
+.menu {
     display: flex;
     align-content: center;
     align-items: center;
@@ -157,6 +156,32 @@ table {
     margin-right: 3%;
     margin-left: 3%;
 }
-li{
-    padding: 1%;
-}
+
+nav ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    overflow: hidden;
+    background-color: black
+    ;
+  }
+  
+  nav  li {
+    float: left;
+    width: 16%;
+  }
+  
+  nav li button {
+    display: block;
+    color: black;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+  }
+  
+  /* Change the link color to #111 (black) on hover */
+  nav li button:hover {
+    color: white;
+    background-color: #111;
+  }

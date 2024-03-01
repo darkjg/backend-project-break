@@ -1,7 +1,9 @@
-const checkAuth = (req, res, next) => {
-    if (req.session.user) {
-      next();
-    } else {
-      res.status(401).send("Unauthorized");
-    }
-  };
+function checkAuth(req, res, next) {
+  console.log(req.session)
+  if (req.session.kind) {
+    next();
+  } else {
+    res.status(401).send("Unauthorized");
+  }
+};
+module.exports=checkAuth

@@ -1,6 +1,6 @@
-const session = require("express-session");
+
 const admin = require("firebase-admin");
-let flag = false;
+
 const head = `<!DOCTYPE html>
 <html lang="en">
 
@@ -11,21 +11,68 @@ const head = `<!DOCTYPE html>
     <link rel="stylesheet" href="/style.css">
 </head>
 `;
-if(session.kind!=undefined && session.kind!=null ){
-    flag = true;
-}else{
-    flag = false;
-}
-console.log(session.kind)
-let header = `
-<header id="cabecera">
-<div class="texto">
-    <div>Productos</div>
-    <div>Camisetas</div>
-    <div>Pantalones</div>
-    <div>Zapatos</div>
-    <div>Accesorios</div>
+let header;
+async function hea(kind) {
+
+    let devol = `
+        <header id="cabecera">
+        
+        <nav class="menu">
+        <ul>
+            <li>
+                <form action="/products" method="get">
+                    <button type="submit" >Productos</button>
+                </form>
+            </li>
+            <li>
+                <form action="/products" method="get">
+                    <button type="submit" >Camisetas</button>
+                </form>
+            </li>
+            <li>
+                <form action="/products" method="get">
+                    <button type="submit" >Pantalones</button>
+                </form>
+            </li>
+            <li>
+                <form action="/products" method="get">
+                    <button type="submit" >Zapatos</button>
+                </form>     
+            </li>
+            <li>
+                <form action="/products" method="get">
+                    <button type="submit" >Accesorios</button>
+                </form>
+            </li>
 `
+    if (kind == undefined) {
+
+        devol += `    
+            <li>
+                <form action="/login" method="get">
+                    <button type="submit" >login</button>
+                </form>
+            </li>
+            </ul>
+            </nav>
+            </header>`
+    } else {
+
+        devol += `    
+            <li>
+                <form action="/logout" method="post">
+                    <button type="submit" >logout</button>
+                </form>
+            </li>
+            </ul>
+            </nav>
+            </header>`
+    }
+
+    return devol;
+}
+
+
 
 let body = ``;
 let devolver = "";
@@ -36,9 +83,12 @@ const Templatefirebase = {
     ///////////////registro
     //Formulario de registro
 
-    
 
-    async formRegistro() {
+
+    async formRegistro(req) {
+
+        header = await hea(req.session.kind)
+
         devolver = `${head}${header}`
         body = ` <form action="/Register/" method="post" id="loginForm">`
         body += `           
@@ -59,16 +109,17 @@ const Templatefirebase = {
     //Envio de registro
     async envioRegistro(registrado) {
         if (registrado) {
+            header = await hea(req.session.kind)
             devolver = `${head}${header}`
-            body = ` <div">`            
+            body = ` <div">`
             body += `           
             <div>Se ha realizado el registro con exito</div>
             `
             body += " </div>"
             devolver += body;
             return devolver;
-        }else{
-            
+        } else {
+
         }
     },
 
@@ -76,7 +127,8 @@ const Templatefirebase = {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////login
     //Formulario de login
-    async formLogin() {
+    async formLogin(req) {
+        header = await hea(req.session.kind)
         devolver = `${head}${header}`
         body = ` <form action="/login/" method="post" id="LogearseForm">`
         body += `           
