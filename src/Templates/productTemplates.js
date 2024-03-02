@@ -1,16 +1,17 @@
 const Product = require("../models/Products");
+const fs= require("node:fs")
 const head = `<!DOCTYPE html>
-<html lang="en">
+                <html lang="en">
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>dashboard</title>
-    <link rel="stylesheet" href="/style.css">
-</head>
+                <head>
+                    <meta charset="UTF-8">
+                    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                    <title>dashboard</title>
+                    <link rel="stylesheet" href="/style.css">
+                </head>
 `;
 async function hea(kind) {
-
+    
     let devol = `
         <header id="cabecera">
         
@@ -58,15 +59,22 @@ async function hea(kind) {
 
         devol += `    
             <li>
+                <form action="/dashboard/new" method="get">
+                    <button type="submit" >crear producto</button>
+                </form>
+            </li>
+  
+            <li>
                 <form action="/logout" method="post">
                     <button type="submit" >logout</button>
                 </form>
             </li>
             </ul>
             </nav>
-            </header>`
+            </header>
+            `
     }
-
+   
     return devol;
 }
 
@@ -89,22 +97,25 @@ const TemplatesProduct = {
 
 
 
-    async principal(Products,req) {
+    async principal(Products, req) {
 
 
         header = await hea(req.session.kind)
-        console.log(header)
+       
         devolver = `${head}${header}`
         body = "<ul class=productos>"
-        // console.log(Products.length)
+      
         if (Products.length != 0) {
             await Products.forEach(Product => {
                 body += `
-                <li>
-                    <div id=${Product.id}>
+                <li class=producto>
+                    <div id=${Product.id}></div>
                     <div>${Product.nombre}</div>
-                    <div>${Product.imagen}</div>
-                    <button type="button">Ver</button> 
+                    <img src="/${Product.imagen}"class="image_product"></img>
+                     <form action="/products/${Product.id}" method="get">
+                             <button type="submit" >Ver</button>
+                    </form>
+                </form>
                 </li>
            `
             });
@@ -114,36 +125,52 @@ const TemplatesProduct = {
         }
         body += " </ul>"
         devolver += body;
-        
+
         return devolver;
     },
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////
     //Obtencion de un producto en concreto
-    async findByid(product) {
+    async findByid(product,req) {       
+
         header = await hea(req.session.kind)
+     
         devolver = `${head}${header}`
+      
         body = "<div class=producto>"
-        
-        if (Products.length != 0) {
-            body += `<div id=${Product.id}>
-                <div>${Product.nombre}</div>
-                <div>${Product.imagen}</div>
-                <div>${Product.descripcion}</div>
-                <div>${Product.precio}</div>
-                <div>${Product.categoria}</div>
-                <div>${Product.talla}</div>            
-            </div>`
+
+        if (product.length != 0) {
+            
+            body += `
+                <div id=${product.id}></div>
+                <div>${product.nombre}</div>
+                <img src="/${product.imagen}"class="image_product"></img>
+                <div>${product.descripcion}</div>             
+                <div>${product.precio}</div>
+                <div>${product.categoria}</div>
+                <div>${product.talla}</div>            
+            `
+            if(req.session.kind){
+                body += `
+                <form action="/dashboard/${product.id}/edit" method="get">
+                    <button type="submit" >Actualizar</button>
+                </form>
+                <form action="/dashboard/${product.id}/edit" method="post">
+                    <button type="submit" >Borrar</button>
+                </form>
+                `
+            }
         } else {
             body += `<h2 class="No_Existe">No existe este producto</h2>`
         }
         body += "</div>"
         devolver += body;
+        
         return devolver;
     },
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////
     //Form para crear un prodcuto
     async formCreateProduct(req) {
-
+        
         header = await hea(req.session.kind)
         devolver = `${head}${header}`
         body = ` <form action="/dashboard/" method="post" id="createForm">`
@@ -184,17 +211,19 @@ const TemplatesProduct = {
 
         body += " </form>"
         devolver += body;
+      
         return devolver;
     },
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////
     //Creacion de un producto
-    async createProduct(nombre, imagen, descripcion, categoria, talla, precio,req) {
+    async createProduct(nombre, imagen, descripcion, categoria, talla, precio, req) {
         header = await hea(req.session.kind)
         devolver = `${head}${header}`
         body = ` <h1>Se ha creado el producto</h1><div class=producto>`
+       
         body += `       
             <div>${nombre}</div>
-            <div>${imagen}</div>
+            <img src="/${imagen}" class="image_product"></img>
             <div>${descripcion}</div>
             <div>${precio}</div>
             <div>${categoria}</div>
@@ -208,9 +237,8 @@ const TemplatesProduct = {
         return devolver;
     },
     //nombre, imagen, descripcion, categoria, talla, precio
-    async formUpdateProduct(prodcutoUpadte,req) {
+    async formUpdateProduct(prodcutoUpadte, req) {
         const { nombre, imagen, descripcion, categoria, talla, precio } = prodcutoUpadte;
-
         //console.log(nombre, imagen, descripcion, categoria, talla, precio)
         header = await hea(req.session.kind)
         devolver = `${head}${header}`
@@ -258,14 +286,14 @@ const TemplatesProduct = {
         return devolver;
     },
 
-    async updateProduct(ProductUpdated,req) {
+    async updateProduct(ProductUpdated, req) {
         const { nombre, imagen, descripcion, categoria, talla, precio } = ProductUpdated;
         header = await hea(req.session.kind)
         devolver = `${head}${header}`
         body = ` <h1>Se ha actualizado el producto</h1><div class=producto>`
         body += `       
             <div>${nombre}</div>
-            <div>${imagen}</div>
+            <img class="image_product" src="/${imagen}"></img>
             <div>${descripcion}</div>
             <div>${precio}</div>
             <div>${categoria}</div>

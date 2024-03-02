@@ -147,6 +147,7 @@ table {
     padding: 1%;
     background-color: black;
 }
+
 .menu {
     display: flex;
     align-content: center;
@@ -155,6 +156,8 @@ table {
     gap: 2%;
     margin-right: 3%;
     margin-left: 3%;
+    justify-content: space-around;
+
 }
 
 nav ul {
@@ -163,25 +166,54 @@ nav ul {
     padding: 0;
     width: 100%;
     overflow: hidden;
-    background-color: black
-    ;
-  }
-  
-  nav  li {
+    background-color: black;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+nav li {
     float: left;
-    width: 16%;
-  }
-  
-  nav li button {
+   
+}
+
+nav li button {
     display: block;
     color: black;
     text-align: center;
     padding: 14px 16px;
     text-decoration: none;
-  }
-  
-  /* Change the link color to #111 (black) on hover */
-  nav li button:hover {
+}
+
+/* Change the link color to #111 (black) on hover */
+nav li button:hover {
     color: white;
     background-color: #111;
-  }
+}
+
+.productos {
+    padding-top: 100px;
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
+.producto {
+    display: flex;
+    align-items: center;
+    align-content: center;
+    flex-direction: column;
+    margin: 2%;
+    padding: 1%;
+    border: rgb(232, 232, 232) 2px solid;
+    border-radius: 2%;
+    gap: 2%;
+}
+
+.image_product {
+    width: 300px;
+    height: 300px;
+    padding: 1%;
+}
+

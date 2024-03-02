@@ -14,10 +14,12 @@ const Template = require("../Templates/productTemplates");
 const ProductController = {
     //showProducts: Devuelve la vista con todos los productos.
     async showProducts(req, res) {
+        
         try {
             const Products = await Product.find();
             res.send(await Template.principal(Products,req));
         } catch (error) {
+            console.log(error)
             res.status(500).send(error);
         }
     },
@@ -26,10 +28,10 @@ const ProductController = {
         try {
             
             
-            const mostrarProduct = await Product.findById(req.params.productId);
-          
-            res.send(mostrarProduct);
+            const mostrarProduct = await Product.findById(req.params.productId);     
+            res.send(await Template.findByid(mostrarProduct,req));
         } catch (error) {
+            console.log(error)
             res.status(500).send(error);
         }
     },
@@ -64,6 +66,7 @@ const ProductController = {
     },
     //updateProduct: Actualiza un producto. Una vez actualizado, redirige a la vista de detalle del producto o a la vista de todos los productos del dashboard.
     async updateProduct(req, res) {
+        console.log(req.body.imagen)
         try {
           
             const ProductUpdated = await Product.findByIdAndUpdate(req.body.idProduct, {
@@ -77,6 +80,7 @@ const ProductController = {
            
             res.send(await Template.updateProduct(ProductUpdated,req));
         } catch (error) {
+            console.log(error)
             res.status(500).send(error);
         }
     },
