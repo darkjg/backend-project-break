@@ -25,22 +25,22 @@ async function hea(kind) {
                 </form>
             </li>
             <li>
-                <form action="/products" method="get">
+                <form action="/products/search/Camisetas" method="get">
                     <button type="submit" >Camisetas</button>
                 </form>
             </li>
             <li>
-                <form action="/products" method="get">
+                <form action="/products/search/Pantalones" method="get">
                     <button type="submit" >Pantalones</button>
                 </form>
             </li>
             <li>
-                <form action="/products" method="get">
+                <form action="/products/search/Zapatos" method="get">
                     <button type="submit" >Zapatos</button>
                 </form>     
             </li>
             <li>
-                <form action="/products" method="get">
+                <form action="/products/search/Accesorios" method="get">
                     <button type="submit" >Accesorios</button>
                 </form>
             </li>
@@ -90,16 +90,18 @@ const Templatefirebase = {
         header = await hea(req.session.kind)
 
         devolver = `${head}${header}`
-        body = ` <form action="/Register/" method="post" id="loginForm">`
-        body += `           
-            <label for="email">Email:</label>
-            <input type="text" id="email" name="email"  required><br>
-    
-            <label for="password">Contraseña:</label>
-            <input type="password" id="password" name="password"  required><br>
+        body = `<div class=formulariosPadre> `
+            body += `<div class=formularios> `
+                body += `
+                <form action="/Register/" method="post" id="loginForm">
+
+                <label for="email">Email:</label>
+                <input type="text" id="email" name="email"  required><br>
         
-           
-            <button type="submit">Registrarse</button>
+                <label for="password">Contraseña:</label>
+                <input type="password" id="password" name="password"  required><br>
+            
+                <button type="submit">Registrarse</button>
             `
         body += " </form>"
         devolver += body;
@@ -113,7 +115,7 @@ const Templatefirebase = {
             devolver = `${head}${header}`
             body = ` <div">`
             body += `           
-            <div>Se ha realizado el registro con exito</div>
+                <div>Se ha realizado el registro con exito</div>
             `
             body += " </div>"
             devolver += body;
@@ -130,18 +132,31 @@ const Templatefirebase = {
     async formLogin(req) {
         header = await hea(req.session.kind)
         devolver = `${head}${header}`
-        body = ` <form action="/login/" method="post" id="LogearseForm">`
-        body += `           
-            <label for="email">Email:</label>
-            <input type="text" id="email" name="email"  required><br>
-    
-            <label for="password">Contraseña:</label>
-            <input type="password" id="password" name="password"  required><br>
-        
-           
-            <button type="submit">Logearse</button>
+        body = `<div class=formulariosPadre> `
+            body += `<div class=formularios> `
+                body += `           
+                    <form action="/login/" method="post" id="LogearseForm">
+                        <label for="email">Email:</label>
+                        <input type="text" id="email" name="email"  required><br>
+                
+                        <label for="password">Contraseña:</label>
+                        <input type="password" id="password" name="password"  required><br>        
+                    
+                        <button type="submit">Logearse</button>
+                    </form>
+                    `
+                
+                body += ` 
+                <form action="/Register/" method="get" id="Registro">
+                <button type="submit">Registrarse</button>
+                </form>
+                `
+            body += `
+            </div>
             `
-        body += " </form>"
+        body += `
+        </div>
+        `
         devolver += body;
         return devolver;
     },

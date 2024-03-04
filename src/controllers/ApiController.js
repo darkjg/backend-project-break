@@ -1,25 +1,12 @@
+
 const Product = require("../models/Products");
-const Template = require("../Templates/productTemplates");
-/*
-- GET /products: Devuelve todos los productos. Cada producto tendrá un enlace a su página de detalle.
-- GET /products/:productId: Devuelve el detalle de un producto.
-- GET /dashboard: Devuelve el dashboard del administrador. En el dashboard aparecerán todos los artículos que se hayan subido. Si clickamos en uno de ellos nos llevará a su página para poder actualizarlo o eliminarlo.
-- GET /dashboard/new: Devuelve el formulario para subir un artículo nuevo.
-- POST /dashboard: Crea un nuevo producto.
-- GET /dashboard/:productId: Devuelve el detalle de un producto en el dashboard.
-- GET /dashboard/:productId/edit: Devuelve el formulario para editar un producto.
-- POST /dashboard/:productId: Actualiza un producto.
-- POST /dashboard/:productId/delete: Elimina un producto.
-*/
-
-
 const ProductController = {
     //showProducts: Devuelve la vista con todos los productos.
     async showProducts(req, res) {
 
         try {
             const Products = await Product.find();
-            res.send(await Template.principal(Products, req));
+            res.send(Products);
         } catch (error) {
             console.log(error)
             res.status(500).send(error);
@@ -32,7 +19,7 @@ const ProductController = {
           
             const Products = await Product.find();
             ProductsMap=Products.filter(Product=>Product.categoria==req.params.categoria)
-            res.send(await Template.findByCategoria(ProductsMap, req));
+            res.send(ProductsMap);
         } catch (error) {
             console.log(error)
             res.status(500).send(error);
@@ -44,27 +31,18 @@ const ProductController = {
 
 
             const mostrarProduct = await Product.findById(req.params.productId);
-            res.send(await Template.findByid(mostrarProduct, req));
+            res.send(mostrarProduct);
         } catch (error) {
             console.log(error)
             res.status(500).send(error);
         }
     },
-    //showNewProduct: Devuelve la vista con el formulario para subir un artículo nuevo.
-    async showNewProduct(req, res) {
-        try {
-            res.status(200).send(await Template.formCreateProduct(req));
-        } catch (error) {
-            res.status(500).send(error);
-        }
-    },
+
     //createProduct: Crea un nuevo producto. Una vez creado, redirige a la vista de detalle del producto o a la vista de todos los productos del dashboard.
     async createProduct(req, res) {
-        try {
-            const { nombre, imagen, descripcion, categoria, talla, precio } = req.body;
-            const productCreated = await Product.create(req.body);
-            let web = await Template.createProduct(nombre, imagen, descripcion, categoria, talla, precio, req)
-            res.status(201).send(web);
+        try {            
+            const productCreated = await Product.create(req.body);            
+            res.status(201).send(productCreated);
         } catch (error) {
             res.status(500).send(error);
         }
@@ -74,7 +52,7 @@ const ProductController = {
         try {
             //console.log(req.params.productId)
             const ProductUpdated = await Product.findById(req.params.productId);
-            res.send(await Template.formUpdateProduct(ProductUpdated, req));
+            res.send(ProductUpdated);
         } catch (error) {
             res.status(500).send(error);
         }
@@ -93,7 +71,7 @@ const ProductController = {
                 precio: req.body.precio
             }, { new: true });
 
-            res.send(await Template.updateProduct(ProductUpdated, req));
+            res.send(ProductUpdated);
         } catch (error) {
             console.log(error)
             res.status(500).send(error);
@@ -104,7 +82,7 @@ const ProductController = {
         try {
             //console.log(req.body.admin)
             const ProductDeleted = await Product.findByIdAndDelete(req.params.productId)
-            res.redirect("/dashboard");
+            res.status(200).send(ProductDeleted);
         } catch (error) {
             res.status(500).send(error);
         }

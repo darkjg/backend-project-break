@@ -174,7 +174,7 @@ nav ul {
 
 nav li {
     float: left;
-   
+
 }
 
 nav li button {
@@ -217,3 +217,51 @@ nav li button:hover {
     padding: 1%;
 }
 
+
+.formulariosPadre {
+    display: flex;
+    align-content: center;
+    align-items: center;
+    justify-content: center;
+}
+
+
+.formularios {
+    display: flex;
+    align-content: center;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    border: rgb(232, 232, 232) 2px solid;
+    border-radius: 2%;
+    margin: 10%;
+    padding: 1%;
+    width: 20%;
+    gap: 10px
+}
+
+.formularios form {
+    gap: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+
+
+}
+
+#LogearseForm button {
+    background-color: #007bff;
+    color: white;
+
+}
+
+#Registro button {
+    background-color: #007bff;
+    color: white;
+}
+
+#loginForm button {
+    background-color: #007bff;
+    color: white;
+}

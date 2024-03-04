@@ -1,5 +1,5 @@
 const Product = require("../models/Products");
-const fs= require("node:fs")
+const fs = require("node:fs")
 const head = `<!DOCTYPE html>
                 <html lang="en">
 
@@ -11,7 +11,7 @@ const head = `<!DOCTYPE html>
                 </head>
 `;
 async function hea(kind) {
-    
+
     let devol = `
         <header id="cabecera">
         
@@ -23,22 +23,22 @@ async function hea(kind) {
                 </form>
             </li>
             <li>
-                <form action="/products" method="get">
+                <form action="/products/search/Camisetas" method="get">
                     <button type="submit" >Camisetas</button>
                 </form>
             </li>
             <li>
-                <form action="/products" method="get">
+                <form action="/products/search/Pantalones" method="get">
                     <button type="submit" >Pantalones</button>
                 </form>
             </li>
             <li>
-                <form action="/products" method="get">
+                <form action="/products/search/Zapatos" method="get">
                     <button type="submit" >Zapatos</button>
                 </form>     
             </li>
             <li>
-                <form action="/products" method="get">
+                <form action="/products/search/Accesorios" method="get">
                     <button type="submit" >Accesorios</button>
                 </form>
             </li>
@@ -49,7 +49,7 @@ async function hea(kind) {
         devol += `    
             <li>
                 <form action="/login" method="get">
-                    <button type="submit" >login</button>
+                    <button type="submit" >Login</button>
                 </form>
             </li>
             </ul>
@@ -60,13 +60,13 @@ async function hea(kind) {
         devol += `    
             <li>
                 <form action="/dashboard/new" method="get">
-                    <button type="submit" >crear producto</button>
+                    <button type="submit" >Crear producto</button>
                 </form>
             </li>
   
             <li>
                 <form action="/logout" method="post">
-                    <button type="submit" >logout</button>
+                    <button type="submit" >Logout</button>
                 </form>
             </li>
             </ul>
@@ -74,7 +74,7 @@ async function hea(kind) {
             </header>
             `
     }
-   
+
     return devol;
 }
 
@@ -101,10 +101,42 @@ const TemplatesProduct = {
 
 
         header = await hea(req.session.kind)
-       
+
         devolver = `${head}${header}`
         body = "<ul class=productos>"
-      
+
+        if (Products.length != 0) {
+            await Products.forEach(Product => {
+                body += `
+                <li class=producto>
+                    <div id=${Product.id}></div>
+                    <div>${Product.nombre}</div>
+                    <img src="/${Product.imagen}"class="image_product"></img>
+                     <form action="/products/${Product.id}" method="get">
+                             <button type="submit" >Ver</button>
+                    </form>
+                </form>
+                </li>
+           `
+            });
+        } else {
+
+            body += `<h2 class="No_Existen">No existen productos</h2>`
+        }
+        body += " </ul>"
+        devolver += body;
+
+        return devolver;
+    },
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //Obtencion de una categoria en concreto
+    async findByCategoria(Products, req) {
+
+
+        header = await hea(req.session.kind)
+
+        devolver = `${head}${header}`
+        body = "<ul class=productos>"
         if (Products.length != 0) {
             await Products.forEach(Product => {
                 body += `
@@ -130,16 +162,16 @@ const TemplatesProduct = {
     },
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////
     //Obtencion de un producto en concreto
-    async findByid(product,req) {       
+    async findByid(product, req) {
 
         header = await hea(req.session.kind)
-     
+
         devolver = `${head}${header}`
-      
+
         body = "<div class=producto>"
 
         if (product.length != 0) {
-            
+
             body += `
                 <div id=${product.id}></div>
                 <div>${product.nombre}</div>
@@ -149,7 +181,7 @@ const TemplatesProduct = {
                 <div>${product.categoria}</div>
                 <div>${product.talla}</div>            
             `
-            if(req.session.kind){
+            if (req.session.kind) {
                 body += `
                 <form action="/dashboard/${product.id}/edit" method="get">
                     <button type="submit" >Actualizar</button>
@@ -164,13 +196,13 @@ const TemplatesProduct = {
         }
         body += "</div>"
         devolver += body;
-        
+
         return devolver;
     },
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////
     //Form para crear un prodcuto
     async formCreateProduct(req) {
-        
+
         header = await hea(req.session.kind)
         devolver = `${head}${header}`
         body = ` <form action="/dashboard/" method="post" id="createForm">`
@@ -211,7 +243,7 @@ const TemplatesProduct = {
 
         body += " </form>"
         devolver += body;
-      
+
         return devolver;
     },
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -220,7 +252,7 @@ const TemplatesProduct = {
         header = await hea(req.session.kind)
         devolver = `${head}${header}`
         body = ` <h1>Se ha creado el producto</h1><div class=producto>`
-       
+
         body += `       
             <div>${nombre}</div>
             <img src="/${imagen}" class="image_product"></img>
