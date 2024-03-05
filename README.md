@@ -3,7 +3,7 @@
 Estes proyecto es una tienda de ropa , en el pual se puede buscar productos por id , por categoria o todos, ademas si te logeas , puedes crear , editar o eliminar cualquiera de los productos creados.
 ## Tecnologías que he utilizado 🛠️
 
->Mi tienda esta creada en Mongo Atalas, Express,NodeJS,Swaggery FireBase
+>Mi tienda esta creada en Mongo Atalas, Express,NodeJS,Swagger y FireBase
 ## Instalacion 
 Primero debemos clonar este repositorio:
     git clone https://github.com/darkjg/backend-project-break
@@ -17,10 +17,29 @@ Quito paso:
     En el terminal ponemos el comando npm i para que instale todos los paquetes
 Sexto paso:
     npm start para iniciar la aplicacion 
+
+
+## Rutas de web 
+
+  ### http://localhost:3000/products/
+  ![Imagen web prodcuts](docs/img/image.png)
+
+  ### http://localhost:3000/products/search/Camisetas?
+  ![Imagen web categorias camisetas](docs/img/image-1.png)
+
+  ### http://localhost:3000/products/search/Pantalones?
+  ![Imagen web categorias pantalones](docs/img/image-2.png)
+  
+  ### http://localhost:3000/products/search/Zapatos?
+  ![Imagen web categorias zapatos](docs/img/image-3.png)
+  
+  ### http://localhost:3000/products/search/Accesorios?
+  ![Imagen web categorias accesorios](image.png)
+
+
+
+
 ## Rutas de api 
-
-
-
 
 ### Rutas de usuario
 - GET /api/products: Devuelve todos los productos. Cada producto tendrá un enlace a su página de detalle.
