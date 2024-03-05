@@ -205,7 +205,7 @@ const TemplatesProduct = {
         
         header = await hea(req.session.kind)
         devolver = `${head}${header}`
-        body = ` <form action="/dashboard/" method="post" id="createForm">`
+        body = ` <form action="/dashboard/" method="post" id="createForm" class="formularios">`
         body += `
             <label for="nombre">Nombre de producto:</label>
             <input type="text" id="nombre" name="nombre" required><br>
@@ -214,7 +214,7 @@ const TemplatesProduct = {
             <input type="text" id="imagen" name="imagen" required><br>
         
             <label for="descripcion">Descripcion:</label>
-            <input type="text" id="descripcion" name="descripcion" required><br>
+            <textarea id="descripcion" name="descripcion" required></textarea><br>
         
             <label for="categoria">Categoría:</label>
                 <select id="categoria" name="categoria" form="createForm" required>
@@ -274,7 +274,7 @@ const TemplatesProduct = {
         //console.log(nombre, imagen, descripcion, categoria, talla, precio)
         header = await hea(req.session.kind)
         devolver = `${head}${header}`
-        body = ` <form action="/dashboard/${prodcutoUpadte.id}" method="post" id="updateForm">`
+        body = ` <form action="/dashboard/${prodcutoUpadte.id}" method="post" id="updateForm"  class="formularios">`
         body += `
             <input type="text" id="idProduct" name="idProduct" value="${prodcutoUpadte.id}" readonly onmousedown="return false;" style=" display:none "><br>
             <label for="nombre">Nombre de producto:</label>
@@ -284,7 +284,7 @@ const TemplatesProduct = {
             <input type="text" id="imagen" name="imagen" value="${imagen}" required><br>
         
             <label for="descripcion">Descripcion:</label>
-            <input type="text" id="descripcion" name="descripcion"  value="${descripcion}" required><br>
+            <textarea id="descripcion" name="descripcion" name="descripcion"  required>${descripcion}</textarea><br>
         
             <label for="categoria">Categoría:</label>
                 <select id="categoria" name="categoria" form="updateForm" required>

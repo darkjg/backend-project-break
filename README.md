@@ -21,20 +21,48 @@ Sexto paso:
 
 ## Rutas de web 
 
-  ### http://localhost:3000/products/
-  ![Imagen web prodcuts](docs/img/image.png)
+  ### Rutas usuario
 
-  ### http://localhost:3000/products/search/Camisetas?
+  #### http://localhost:3000/products/
+  ![Imagen web prodcuts](docs/img/image.png)
+  #### http://localhost:3000/products/65db734f8948d4c32a39fcc4?
+  ![Detalle como usuario](image-5.png)
+
+  #### http://localhost:3000/products/search/Camisetas?
   ![Imagen web categorias camisetas](docs/img/image-1.png)
 
-  ### http://localhost:3000/products/search/Pantalones?
+  #### http://localhost:3000/products/search/Pantalones?
   ![Imagen web categorias pantalones](docs/img/image-2.png)
   
-  ### http://localhost:3000/products/search/Zapatos?
+  #### http://localhost:3000/products/search/Zapatos?
   ![Imagen web categorias zapatos](docs/img/image-3.png)
+
+  #### http://localhost:3000/products/search/Accesorios?
+  ![Imagen web categorias accesorios](docs/img/image-8.png)
+
+
+  ### Rutas cuenta
+
+  #### http://localhost:3000/Register/?
+  ![Formlario para registro de administrador](docs/img/image-9.png)
   
-  ### http://localhost:3000/products/search/Accesorios?
-  ![Imagen web categorias accesorios](image.png)
+  #### http://localhost:3000/login?
+  ![Formulario para logearse como administrador](idocs/img/mage-10.png)
+
+  ### Rutas de administrador
+
+  #### http://localhost:3000/dashboard
+  ![Imagen web dashboard](docs/img/image-11.png)
+
+  #### http://localhost:3000/products/65db734f8948d4c32a39fcc4?
+  ![Detalle de un producto como administrador](docs/img/image-4.png)
+
+  #### http://localhost:3000/dashboard/new?
+  ![Formulario creacion de producto](docs/img/image-6.png)
+
+
+  #### http://localhost:3000/dashboard/65db734f8948d4c32a39fcc4/edit?
+  ![Formulario actualizacion de producto](docs/img/image-7.png)
 
 
 

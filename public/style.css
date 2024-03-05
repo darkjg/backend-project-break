@@ -265,3 +265,12 @@ nav li button:hover {
     background-color: #007bff;
     color: white;
 }
+
+#createForm{
+    align-items: inherit;
+    width: 75%;
+}
+#updateForm{
+    align-items: inherit;
+    width: 75%;
+}
