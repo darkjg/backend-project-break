@@ -202,7 +202,7 @@ const TemplatesProduct = {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////
     //Form para crear un prodcuto
     async formCreateProduct(req) {
-
+        
         header = await hea(req.session.kind)
         devolver = `${head}${header}`
         body = ` <form action="/dashboard/" method="post" id="createForm">`

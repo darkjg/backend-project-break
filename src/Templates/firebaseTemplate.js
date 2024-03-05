@@ -87,6 +87,7 @@ const Templatefirebase = {
 
     async formRegistro(req) {
 
+        
         header = await hea(req.session.kind)
 
         devolver = `${head}${header}`

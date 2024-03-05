@@ -8,6 +8,8 @@ const path = require('path');
 const { hash } = require('./config/Encrypt');
 const swaggerUI = require("swagger-ui-express");
 const docs = require("./docs/index");
+const mock = require('jest-mock-express');
+
 app.use(
     session({
         secret: hash,

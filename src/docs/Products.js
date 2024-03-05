@@ -33,7 +33,7 @@ module.exports = {
                     name: "productId",
                     in: "path",
                     schema: {
-                        $ref: "#/components/schemas/productInput",
+                        $ref: "#/components/schemas/product",
                     },
                     description: "Id of product",
                 }, ],
@@ -155,7 +155,9 @@ module.exports = {
                         description: "product found successfully",
                         content: {
                             "application/json": {
-                                schema: { $ref: "#/components/schemas/product" },
+                                schema: {
+                                     $ref: "#/components/schemas/product",
+                             },
                             },
                         },
                     },
