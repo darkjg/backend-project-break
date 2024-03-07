@@ -20,11 +20,11 @@ const FirebaseController = {
 
     async registro(req, res) {
         const { email, password } = req.body;
-        //    await Cuenta.create(req.body);
+      //  await Cuenta.create(req.body);
 
-        createUserWithEmailAndPassword(auth, email, password).then((userCredential) => {
+        createUserWithEmailAndPassword(auth, email, password).then(async (userCredential) => {
             let user = userCredential.user;
-
+            res.send(await Template.formLogin(req));
         })
             .catch((error) => {
                 if (error.code == "auth/email-already-in-use") {
@@ -64,8 +64,8 @@ const FirebaseController = {
     async login(req, res) {
         const { email, password } = req.body;
         try {
-           
-            const logIn = await signInWithEmailAndPassword(auth, email, password);         
+
+            const logIn = await signInWithEmailAndPassword(auth, email, password);
             req.session.kind = logIn._tokenResponse.kind
             res.redirect("/dashboard");
         } catch (error) {
