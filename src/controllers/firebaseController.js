@@ -67,6 +67,8 @@ const FirebaseController = {
 
             const logIn = await signInWithEmailAndPassword(auth, email, password);
             req.session.kind = logIn._tokenResponse.kind
+            req.session.token=logIn;
+         
             res.redirect("/dashboard");
         } catch (error) {
 
@@ -77,6 +79,7 @@ const FirebaseController = {
     //logout
     async logount(req, res) {
         req.session.kind = null;
+        req.session.destroy();
         res.redirect("/products");
         return ("Logged out");
     }

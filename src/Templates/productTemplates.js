@@ -249,6 +249,7 @@ const TemplatesProduct = {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////
     //Creacion de un producto
     async createProduct(nombre, imagen, descripcion, categoria, talla, precio, req) {
+      
         header = await hea(req.session.kind)
         devolver = `${head}${header}`
         body = ` <h1>Se ha creado el producto</h1><div class=producto>`

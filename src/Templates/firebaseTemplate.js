@@ -163,17 +163,9 @@ const Templatefirebase = {
     },
     async login(req) {
         const { email, password } = req.body;
-        admin.auth().getUserByEmail(email).then((userRecord) => {
-            // Check the provided password against the user's stored password hash
-            // This part may vary depending on your application
-            if (password === "admin123") {
-                flag = true;
-                req.session.user = userRecord.uid;
-                return ("Login successful");
-            } else {
-                return ("Login failed");
-            }
-        })
+
+        const token= admin.auth().getUserByEmail(email)
+
     },
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////
     //logout

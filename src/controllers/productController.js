@@ -54,6 +54,7 @@ const ProductController = {
     },
     //showNewProduct: Devuelve la vista con el formulario para subir un artículo nuevo.
     async showNewProduct(req, res) {
+       
         try {
             res.status(200).send(await Template.formCreateProduct(req));
         } catch (error) {
@@ -63,6 +64,7 @@ const ProductController = {
     //createProduct: Crea un nuevo producto. Una vez creado, redirige a la vista de detalle del producto o a la vista de todos los productos del dashboard.
     async createProduct(req, res) {
         try {
+           
             const { nombre, imagen, descripcion, categoria, talla, precio } = req.body;
             const productCreated = await Product.create(req.body);
             let web = await Template.createProduct(nombre, imagen, descripcion, categoria, talla, precio, req)
@@ -83,7 +85,7 @@ const ProductController = {
     },
     //updateProduct: Actualiza un producto. Una vez actualizado, redirige a la vista de detalle del producto o a la vista de todos los productos del dashboard.
     async updateProduct(req, res) {
-        console.log(req.body.imagen)
+       
         try {
 
             const ProductUpdated = await Product.findByIdAndUpdate(req.body.idProduct, {
